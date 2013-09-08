@@ -31,8 +31,6 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.y += self.dy * dt
 
-
-
         # Check if we ran into a wall
         new = self.rect
         self.resting = False
