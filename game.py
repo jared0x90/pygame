@@ -1,21 +1,22 @@
 import pygame
 import random
+import settings
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super(Player, self).__init__(*groups)
         self.image = pygame.image.load('images/kain.png')
-        self.rect = pygame.rect.Rect((400, 300), self.image.get_size())
-        self.pixels_per_second = 120
+        self.rect = pygame.rect.Rect((settings.SCREEN_WIDTH / 2, settings.SCREEN_HEIGHT / 2), self.image.get_size())
+        self.pixels_per_second = 200
 
     def update(self, partial_seconds, game):
         # Store our position prior to update in case
         # we need to go back to it
-        last_position = self.rect.copy()
+        last = self.rect.copy()
 
         # Process keystrokes
         key = pygame.key.get_pressed()
-        move_amount = self.pixels_per_second * partial_seconds
+        move_amount = int(self.pixels_per_second * partial_seconds)
         if key[pygame.K_LEFT]:
             self.rect.x -= move_amount
         if key[pygame.K_RIGHT]:
@@ -25,15 +26,24 @@ class Player(pygame.sprite.Sprite):
         if key[pygame.K_DOWN]:
             self.rect.y += move_amount
 
-        # If we have run into a wall use our last position
+        # Check if we ran into a wall
+        new = self.rect
         for cell in pygame.sprite.spritecollide(self, game.walls, False):
-            self.rect = last_position
+            cell = cell.rect
+            if last.right <= cell.left and new.right > cell.left:
+                new.right = cell.left
+            if last.left >= cell.right and new.left < cell.right:
+                new.left = cell.right
+            if last.bottom <= cell.top and new.bottom > cell.top:
+                new.bottom = cell.top
+            if last.top >= cell.bottom and new.top < cell.bottom:
+                new.top = cell.bottom            
 
 class Game(object):
     def main(self, screen):
         # Create the clock and set framerate
         clock = pygame.time.Clock()
-        framerate = 60
+        framerate = 30
 
         # Load images
         background = pygame.image.load('images/bg.jpg')
@@ -93,6 +103,6 @@ class Game(object):
 # Run the game if we are running this file
 if __name__ == '__main__':
     pygame.init()
-    screen = pygame.display.set_mode((800,600))
+    screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
     pygame.display.set_caption("Ayrscott Games")
     Game().main(screen)
