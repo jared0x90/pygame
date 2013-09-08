@@ -1,5 +1,4 @@
 import pygame
-import random
 
 class Game(object):
     def main(self, screen):
