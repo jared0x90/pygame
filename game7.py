@@ -6,7 +6,7 @@ class Game(object):
         # Create the clock
         clock = pygame.time.Clock()
 
-        # Load the player sprite
+        # Load images
         background = pygame.image.load('images/bg.jpg')
         player = pygame.image.load('images/kain.png')
 
@@ -45,7 +45,7 @@ class Game(object):
             # --------------------------------------------------
             # Draw the screen
             # --------------------------------------------------
-            # Create a backgound color
+            # Create a backgound
             screen.blit(background , (0,0))
 
             # Draw the player
