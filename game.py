@@ -1,7 +1,7 @@
 import pygame
 import random
 
-class Player(pyugame.sprite.Sprite):
+class Player(pygame.sprite.Sprite):
     def __init__(self, *groups):
         super(Player, self).__init__(*groups)
         self.image = pygame.image.load('images/kain.png')
