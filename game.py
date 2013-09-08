@@ -6,18 +6,19 @@ class Player(pygame.sprite.Sprite):
         super(Player, self).__init__(*groups)
         self.image = pygame.image.load('images/kain.png')
         self.rect = pygame.rect.Rect((400, 300), self.image.get_size())
-        self.move_speed = 5
+        self.pixels_per_second = 120
 
-    def update(self):
+    def update(self, partial_seconds):
         key = pygame.key.get_pressed()
+        move_amount = self.pixels_per_second * partial_seconds
         if key[pygame.K_LEFT]:
-            self.rect.x -= self.move_speed
+            self.rect.x -= move_amount
         if key[pygame.K_RIGHT]:
-            self.rect.x += self.move_speed
+            self.rect.x += move_amount
         if key[pygame.K_UP]:
-            self.rect.y -= self.move_speed
+            self.rect.y -= move_amount
         if key[pygame.K_DOWN]:
-            self.rect.y += self.move_speed
+            self.rect.y += move_amount
 
 class Game(object):
     def main(self, screen):
@@ -31,7 +32,7 @@ class Game(object):
         sprites = pygame.sprite.Group()
         self.player = Player(sprites)
 
-        framerate = 30
+        framerate = 60
 
         #---------------------------------------------------
         # MAIN LOOP
@@ -40,8 +41,9 @@ class Game(object):
             #---------------------------------------------------
             # Handle events, controls, framerate
             #---------------------------------------------------
-            # Setup framerate / reduce CPU use
-            clock.tick(framerate)
+            # Setup framerate / reduce CPU use, return time in
+            # milliseconds since last tick for sprite movement
+            dt = clock.tick(framerate)
 
             # Check the event loop
             for event in pygame.event.get():
@@ -50,8 +52,8 @@ class Game(object):
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     return
 
-            # Update sprites
-            sprites.update()
+            # Update sprites using time since last tick
+            sprites.update(dt / 1000.0)
 
             #---------------------------------------------------
             # Draw the screen
