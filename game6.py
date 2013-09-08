@@ -55,6 +55,6 @@ class Game(object):
 # Run the game if we are running this file
 if __name__ == '__main__':
     pygame.init()
-    screen = pygame.display.set_mode((640,480))
+    screen = pygame.display.set_mode((800,600))
     pygame.display.set_caption("Ayrscott Games")
     Game().main(screen)
