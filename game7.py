@@ -13,7 +13,7 @@ class Game(object):
         player_x = 400
         player_y = 300
 
-        framerate = 60
+        framerate = 30
 
         jump_rate = 5
 
