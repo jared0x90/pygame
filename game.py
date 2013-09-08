@@ -28,7 +28,7 @@ class Game(object):
         background = pygame.image.load('images/bg.jpg')
 
         # Create sprites
-        sprites = pygame.sprites.Group()
+        sprites = pygame.sprite.Group()
         self.player = Player(sprites)
 
         framerate = 30
