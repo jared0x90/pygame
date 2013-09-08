@@ -56,9 +56,9 @@ class Game(object):
         # Create a group called walls
         self.walls = pygame.sprite.Group()
         block = pygame.image.load('images/block.png')
-        for x in xrange(0, 800, 32):
-            for y in xrange(0, 600, 32):
-                if x in (0, 800-32) or y in (0, 600-32):
+        for x in xrange(0, settings.SCREEN_WIDTH, 32):
+            for y in xrange(0, settings.SCREEN_HEIGHT, 32):
+                if x in (0, settings.SCREEN_WIDTH-32) or y in (0, settings.SCREEN_HEIGHT-32):
                     wall = pygame.sprite.Sprite(self.walls)
                     wall.image = block
                     wall.rect = pygame.rect.Rect((x, y), block.get_size())
