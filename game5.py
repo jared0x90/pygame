@@ -12,7 +12,9 @@ class Game(object):
             # --------------------------------------------------
             # Setup framerate / reduce CPU use
             # --------------------------------------------------
-            clock.tick(30) # Pass the maximum framerate
+
+            # Pass the maximum framerate
+            clock.tick(30)
 
             # --------------------------------------------------
             # Event handling
